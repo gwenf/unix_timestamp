@@ -2,7 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var _ = require('lodash');
-
+var moment = require('moment');
+moment().format();
 
 app.set('view engine', 'pug');
 //built in middleware in express
@@ -11,10 +12,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.get('/:time', function(req,res){
-  console.log(req.params.time);
-  // 
-  if (valid){
-    res.send({"unix":req.params.time, "natural": "..."});
+  var unix = req.params.time;
+  var nat = moment.unix(unix).format("MMMM D, YYYY"); //need to change to natural
+
+  console.log(unix);
+  console.log(moment.unix(unix).format("MMMM D, YYYY"));
+  //
+  if (unix){
+    res.send({"unix":unix, "natural": nat});
   } else {
     res.send({"unix": null, "natural": null});
   }
