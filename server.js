@@ -57,5 +57,7 @@ app.get('*', function(req,res){
   res.render('index', { title: 'TimeStampService' })
 });
 
-app.listen('3000');
-console.log("Express listening on port 3000.")
+var port = process.env.PORT || 8080;
+
+app.listen(port);
+console.log("Express listening on port...")
