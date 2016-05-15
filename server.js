@@ -13,24 +13,35 @@ app.use(bodyParser.json());
 
 app.get('/:time', function(req,res){
   var date = req.params.time;
-  var unix = moment(date, "MMMM D, YYYY").format("X");
-  var nat = moment.unix(unix).format("MMMM D, YYYY"); //need to change to natural
+  // var unix = moment(date, "MMMM D, YYYY").format("X");
+  var unix = null;
+  // var nat = moment.unix(unix).format("MMMM D, YYYY");
+  var nat = null;
+  // console.log(parseInt(date))
 
   // var isValid = moment(date, "MMMM D, YYYY").isValid();
   if (moment(date, "MMMM D, YYYY").isValid()){
-    console.log('natural date');
+    nat = moment.unix(unix).format("MMMM D, YYYY");
+    if (isNaN(parseInt(date))){
+      unix = moment(date, "MMMM D, YYYY").format("X");
+    } else {
+      unix = date;
+    }
+    console.log('date valid');
+
     res.send({"unix":unix, "natural": nat});
-  } else if (moment.unix(unix).isValid()){
-    console.log('unix date');
-    res.send({"unix":unix, "natural": nat});
+  // } else if (moment.unix(unix).isValid()){
+    // console.log('unix date');
+    // res.send({"unix":unix, "natural": nat});
   } else {
-    res.send({"unix": null, "natural": null});
+    console.log('date not valid');
+    res.send({"unix": unix, "natural": nat});
   }
 
-  console.log(date >= 0);
-
-  console.log(unix);
-  console.log(nat);
+  // console.log(date >= 0);
+  //
+  // console.log(unix);
+  // console.log(nat);
   //
   // if (unix){
   //   res.send({"unix":unix, "natural": nat});
