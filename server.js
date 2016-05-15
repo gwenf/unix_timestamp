@@ -12,17 +12,31 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.get('/:time', function(req,res){
-  var unix = req.params.time;
+  var date = req.params.time;
+  var unix = moment(date, "MMMM D, YYYY").format("X");
   var nat = moment.unix(unix).format("MMMM D, YYYY"); //need to change to natural
 
-  console.log(unix);
-  console.log(moment.unix(unix).format("MMMM D, YYYY"));
-  //
-  if (unix){
+  // var isValid = moment(date, "MMMM D, YYYY").isValid();
+  if (moment(date, "MMMM D, YYYY").isValid()){
+    console.log('natural date');
+    res.send({"unix":unix, "natural": nat});
+  } else if (moment.unix(unix).isValid()){
+    console.log('unix date');
     res.send({"unix":unix, "natural": nat});
   } else {
     res.send({"unix": null, "natural": null});
   }
+
+  console.log(date >= 0);
+
+  console.log(unix);
+  console.log(nat);
+  //
+  // if (unix){
+  //   res.send({"unix":unix, "natural": nat});
+  // } else {
+  //   res.send({"unix": null, "natural": null});
+  // }
   //if req.params is a unix time stamp, return json with dates
   //else return json with null
   // res.send(req.params);
