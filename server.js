@@ -21,13 +21,14 @@ app.get('/:time', function(req,res){
 
   // var isValid = moment(date, "MMMM D, YYYY").isValid();
   if (moment(date, "MMMM D, YYYY").isValid()){
-    nat = moment.unix(unix).format("MMMM D, YYYY");
     if (isNaN(parseInt(date))){
       unix = moment(date, "MMMM D, YYYY").format("X");
     } else {
       unix = date;
     }
-    console.log('date valid', unix, date, nat);
+    nat = moment.unix(unix).format("MMMM D, YYYY");
+    console.log('nat', nat)
+    // console.log('date valid', nat, unix, date);
 
     res.send({"unix":unix, "natural": nat});
   // } else if (moment.unix(unix).isValid()){
