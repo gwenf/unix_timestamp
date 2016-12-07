@@ -27,7 +27,7 @@ app.get('/:time', function(req,res){
     } else {
       unix = date;
     }
-    console.log('date valid');
+    console.log('date valid', unix, date, nat);
 
     res.send({"unix":unix, "natural": nat});
   // } else if (moment.unix(unix).isValid()){
